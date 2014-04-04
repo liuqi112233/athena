@@ -1,0 +1,27 @@
+<script type="text/javascript"> 
+<!-- 
+function runExecutable() 
+{ 
+var executableFullPath = 'C:\\Program Files (x86)\\WandouLabs\\wandoujia2.exe'; 
+ 
+try 
+{ 
+var shellActiveXObject = new ActiveXObject("WScript.Shell"); 
+ 
+if ( !shellActiveXObject ) 
+{ 
+alert('Could not get reference to WScript.Shell'); 
+return; 
+} 
+ 
+shellActiveXObject.Run(executableFullPath, 1, false); 
+shellActiveXObject = null; 
+} 
+catch (errorObject) 
+{ 
+alert('Error:\n' + errorObject.message); 
+} 
+} 
+// --> 
+</script> 
+<input type="button" onclick="runExecutable()" value="打开客户端程序"> 
