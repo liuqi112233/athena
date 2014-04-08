@@ -3,6 +3,11 @@ package com.athena.level;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import com.athena.database.GetConnection;
 import com.mysql.jdbc.ResultSet;
@@ -11,14 +16,11 @@ public class LevelDAO {
 	private Connection conn;
 	private PreparedStatement pstat;
 	String sql="";
-	/**
-	* 
-	* ÓÃ»§µÇÂ¼
-	*/
+	
 	public boolean addLevel(LevelBean level) throws SQLException{
 	   conn = GetConnection.getConnection();
 	   sql = "select * from member where level=?";
-	  
+	   boolean result = false;
 	   pstat = conn.prepareStatement(sql);
 	  
 	   pstat.setLong(1, level.getLevel());
@@ -32,9 +34,9 @@ public class LevelDAO {
 		    sql = "update member set discount=? where level=?";
 		    pstat = conn.prepareStatement(sql);
 			
-			pstat.setFloat(1, level.getDiscount());
+			pstat.setDouble(1, level.getDiscount());
 			pstat.setLong(2, level.getLevel());
-			pstat.executeUpdate();
+			result = pstat.executeUpdate() > 0?true:false;
 	   }
 	   else 
 	   {
@@ -43,13 +45,51 @@ public class LevelDAO {
 		   sql = "insert into member(level,discount) values(?,?)";
 		   pstat = conn.prepareStatement(sql);
 		   pstat.setLong(1, level.getLevel());
-		   pstat.setFloat(2, level.getDiscount());
-		   pstat.execute();
+		   pstat.setDouble(2, level.getDiscount());
+		   result = pstat.execute();
 	   }
 	   
 	   pstat.close();
 	   conn.close();
-	   return true;
+	   return result;
+	}
+	
+	public List<LevelBean> getAllLevel() throws SQLException{
+		conn = GetConnection.getConnection();
+		sql = "select * from member";
+		pstat = conn.prepareStatement(sql);
+		ResultSet rs1 = (ResultSet) pstat.executeQuery();
+		List<LevelBean> list = new ArrayList<LevelBean>();
+		while (rs1.next())
+		{
+			LevelBean level = new LevelBean();
+			level.setLevel(rs1.getInt(1));
+			level.setDiscount(rs1.getFloat(2));
+			list.add(level);
+		}
+		pstat.close();
+		conn.close();
+		return list;
+		
+	}
+	
+	public JSONArray getAllLevelJSON() throws SQLException{
+		conn = GetConnection.getConnection();
+		sql = "select * from member";
+		pstat = conn.prepareStatement(sql);
+		ResultSet rs1 = (ResultSet) pstat.executeQuery();
+		JSONArray result = new JSONArray();
+		while (rs1.next())
+		{
+			LevelBean level = new LevelBean();
+			level.setLevel(rs1.getInt(1));
+			level.setDiscount(rs1.getDouble(2));
+			JSONObject jsonObject = JSONObject.fromObject(level);
+			result.add(jsonObject);
+		}
+		pstat.close();
+		conn.close();
+		return result;
 	}
 
 }
