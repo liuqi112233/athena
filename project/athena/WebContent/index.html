@@ -1,0 +1,24 @@
+<html>
+
+
+<!-- awwwb.com -->
+<head>
+<script type="text/javascript" src="jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("p").click(function(){
+  $.post( "setmemberlevel", {level:1,discount,0.5},function( data ) {
+  alert( "Data Loaded: " + data );
+});
+  });
+});
+</script>
+</head>
+
+<body>
+<p>If you click on me, I will disappear.</p>
+</body>
+
+
+<!-- awwwb.com -->
+</html> 
