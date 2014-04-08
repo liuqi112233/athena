@@ -33,6 +33,16 @@ public class SetMemberLevel extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
+    public void init() throws ServletException {
+    	System.out.println("test");
+    	LevelDAO dao = new LevelDAO();
+    	try {
+			dao.getAllLevel();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
     
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -49,29 +59,37 @@ public class SetMemberLevel extends HttpServlet {
 
 	   response.setContentType("text/html");
 	   response.setCharacterEncoding("utf-8");
+	   String option = request.getParameter("option");
 	   String level = request.getParameter("level");
 	   String discount = request.getParameter("discount");
 	   LevelBean lvlbean = new LevelBean();
 	   int lvl = Integer.parseInt(level);
-	   float count = Float.parseFloat(discount);
 	   lvlbean.setLevel(lvl);
-	   lvlbean.setDiscount(count);
 	   LevelDAO dao = new LevelDAO();
 	   boolean result = false;
-	   JSONArray list = null;
-	   try {
-		   result  = dao.addLevel(lvlbean);
-		   list = dao.getAllLevelJSON();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	   JSONObject rt = new JSONObject();
-	   rt.element("result", result);
-	   rt.element("list", list);
+	   if(option == null || !option.equals("delete")){
+		   double count = Double.parseDouble(discount);
+		   lvlbean.setDiscount(count);
+		   try {
+			   result  = dao.addLevel(lvlbean);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	   }
+	   else if(option.equals("delete")){
+		   try {
+			   result  = dao.delLevel(lvlbean);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	   }
+	   JSONArray list = dao.getAllLevelJSON();
 	   PrintWriter out=response.getWriter();
-       out.println(rt);
+       out.println(list);
        out.close();
+		   
 	}
 
 }

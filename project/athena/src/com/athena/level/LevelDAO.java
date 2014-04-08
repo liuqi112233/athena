@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -16,6 +19,7 @@ public class LevelDAO {
 	private Connection conn;
 	private PreparedStatement pstat;
 	String sql="";
+	private static Map levellist = new HashMap();
 	
 	public boolean addLevel(LevelBean level) throws SQLException{
 	   conn = GetConnection.getConnection();
@@ -48,47 +52,55 @@ public class LevelDAO {
 		   pstat.setDouble(2, level.getDiscount());
 		   result = pstat.execute();
 	   }
-	   
+	   levellist.put(level.getLevel(),level);
 	   pstat.close();
 	   conn.close();
 	   return result;
 	}
 	
-	public List<LevelBean> getAllLevel() throws SQLException{
-		conn = GetConnection.getConnection();
-		sql = "select * from member";
-		pstat = conn.prepareStatement(sql);
-		ResultSet rs1 = (ResultSet) pstat.executeQuery();
-		List<LevelBean> list = new ArrayList<LevelBean>();
-		while (rs1.next())
-		{
-			LevelBean level = new LevelBean();
-			level.setLevel(rs1.getInt(1));
-			level.setDiscount(rs1.getFloat(2));
-			list.add(level);
-		}
-		pstat.close();
-		conn.close();
-		return list;
-		
+	public boolean delLevel(LevelBean level) throws SQLException{
+		   conn = GetConnection.getConnection();
+		   sql = "delete from member where level=?";
+		   boolean result = false;
+		   pstat = conn.prepareStatement(sql);
+		  
+		   pstat.setLong(1, level.getLevel());
+		  
+		   result = pstat.execute();
+		   levellist.remove(level.getLevel());
+		   pstat.close();
+		   conn.close();
+		   return result;
 	}
 	
-	public JSONArray getAllLevelJSON() throws SQLException{
+	public Map getAllLevel() throws SQLException{
 		conn = GetConnection.getConnection();
 		sql = "select * from member";
 		pstat = conn.prepareStatement(sql);
 		ResultSet rs1 = (ResultSet) pstat.executeQuery();
-		JSONArray result = new JSONArray();
+		levellist.clear();
 		while (rs1.next())
 		{
 			LevelBean level = new LevelBean();
 			level.setLevel(rs1.getInt(1));
 			level.setDiscount(rs1.getDouble(2));
-			JSONObject jsonObject = JSONObject.fromObject(level);
-			result.add(jsonObject);
+			levellist.put(level.getLevel(),level);
 		}
 		pstat.close();
 		conn.close();
+		return levellist;
+		
+	}
+	
+	public JSONArray getAllLevelJSON() {
+		JSONArray result = new JSONArray();
+		Iterator iter = levellist.entrySet().iterator(); 
+		while (iter.hasNext()) { 
+		    Map.Entry entry = (Map.Entry) iter.next(); 
+		    LevelBean level = (LevelBean)entry.getValue();
+		    JSONObject jsonObject = JSONObject.fromObject(level);
+			result.add(jsonObject);
+		}
 		return result;
 	}
 
