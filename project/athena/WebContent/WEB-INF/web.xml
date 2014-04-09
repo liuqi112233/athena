@@ -8,12 +8,25 @@
     <servlet>
         <servlet-name>SetMemberLevel</servlet-name>
         <servlet-class>com.athena.level.SetMemberLevel</servlet-class>
+         <load-on-startup>2</load-on-startup>
+    </servlet>
+    
+    
+    
+    <servlet>
+        <servlet-name>Initialization</servlet-name>
+        <servlet-class>com.athena.Initialization</servlet-class>
          <load-on-startup>1</load-on-startup>
     </servlet>
     
     <servlet-mapping>
         <servlet-name>SetMemberLevel</servlet-name>
         <url-pattern>/setmemberlevel</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>Initialization</servlet-name>
+        <url-pattern>/initialization</url-pattern>
     </servlet-mapping>
     
 </web-app>

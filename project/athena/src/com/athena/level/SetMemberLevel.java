@@ -35,13 +35,6 @@ public class SetMemberLevel extends HttpServlet {
 
     public void init() throws ServletException {
     	System.out.println("test");
-    	LevelDAO dao = new LevelDAO();
-    	try {
-			dao.getAllLevel();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
     }
     
 	/**

@@ -21,6 +21,10 @@ public class LevelDAO {
 	String sql="";
 	private static Map levellist = new HashMap();
 	
+	public static LevelBean getDiscount(int level){
+		return (LevelBean) levellist.get(level);
+	}
+	
 	public boolean addLevel(LevelBean level) throws SQLException{
 	   conn = GetConnection.getConnection();
 	   sql = "select * from member where level=?";
