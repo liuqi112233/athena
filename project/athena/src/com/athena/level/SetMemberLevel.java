@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.athena.log.Log;
+import com.athena.util.BaseServlet;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -22,7 +25,7 @@ import net.sf.json.JSONObject;
  * Servlet implementation class SetMemberLevel
  */
 @WebServlet("/SetMemberLevel")
-public class SetMemberLevel extends HttpServlet {
+public class SetMemberLevel extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
@@ -49,7 +52,6 @@ public class SetMemberLevel extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-
 	   response.setContentType("text/html");
 	   response.setCharacterEncoding("utf-8");
 	   String option = request.getParameter("option");

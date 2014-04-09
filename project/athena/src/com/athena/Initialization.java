@@ -10,14 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.FileAppender;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.SimpleLayout;
+
 import com.athena.game.GameDAO;
 import com.athena.level.LevelDAO;
+import com.athena.log.Log;
+import com.athena.util.BaseServlet;
 
 /**
  * Servlet implementation class Initialization
  */
 @WebServlet("/Initialization")
-public final class Initialization extends HttpServlet {
+public final class Initialization extends BaseServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -48,6 +55,7 @@ public final class Initialization extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	
 	}
 
 	/**

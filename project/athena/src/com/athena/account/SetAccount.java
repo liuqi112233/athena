@@ -14,12 +14,13 @@ import net.sf.json.JSONArray;
 
 import com.athena.level.LevelBean;
 import com.athena.level.LevelDAO;
+import com.athena.util.BaseServlet;
 
 /**
  * Servlet implementation class SetAccount
  */
 @WebServlet("/SetAccount")
-public class SetAccount extends HttpServlet {
+public class SetAccount extends BaseServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
