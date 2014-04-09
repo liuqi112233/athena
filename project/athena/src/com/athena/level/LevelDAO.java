@@ -68,7 +68,7 @@ public class LevelDAO {
 		  
 		   pstat.setLong(1, level.getLevel());
 		  
-		   result = pstat.execute();
+		   result = pstat.executeUpdate()>0?true:false;
 		   levellist.remove(level.getLevel());
 		   pstat.close();
 		   conn.close();

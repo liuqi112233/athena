@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 import com.athena.util.BaseServlet;
 
 /**
@@ -42,19 +44,66 @@ public class SetAccount extends BaseServlet {
 		   response.setCharacterEncoding("utf-8");
 		   String option = request.getParameter("option");
 		   String id = request.getParameter("id");
-		   if(id == null)
+		   if(id == null || option == null)
 			   return;
 		   int userID = Integer.parseInt(id);
 		   boolean result = false;
-		   try {
-				result = AccountDAO.addAccount(userID);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		   PrintWriter out=response.getWriter();
-	       out.println(result?"1":"0");
-	       out.close();
+		   double balance = 0;
+		   if(option.equals("addAccount")){
+			   try {
+					result = AccountDAO.addAccount(userID);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			   
+			   PrintWriter out=response.getWriter();
+		       out.println(result?"1":"0");
+		       out.close();
+		   } else if(option.equals("delAccount")){
+			   try {
+					result = AccountDAO.delAccount(userID);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			   
+			   PrintWriter out=response.getWriter();
+		       out.println(result?"1":"0");
+		       out.close();
+		   } else if(option.equals("addBalance")){
+			   try {
+				   String balanceStr = request.getParameter("balance");
+				   double count = Double.valueOf(balanceStr);
+				   if(count <= 0)
+					   return;
+				   balance = AccountDAO.addBalance(userID, count);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			   JSONObject r = new JSONObject();
+			   r.accumulate("balance", balance);
+			   PrintWriter out=response.getWriter();
+		       out.println(r);
+		       out.close();
+		   } else if(option.equals("redBalance")){
+			   try {
+				   String balanceStr = request.getParameter("balance");
+				   double count = Double.valueOf(balanceStr);
+				   if(count <= 0)
+					   return;
+				   balance = AccountDAO.redBalance(userID, count);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			   JSONObject r = new JSONObject();
+			   r.accumulate("balance", balance);
+			   PrintWriter out=response.getWriter();
+		       out.println(r);
+		       out.close();
+		   }
 	}
 
 }
