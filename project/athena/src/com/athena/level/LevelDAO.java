@@ -54,7 +54,7 @@ public class LevelDAO {
 		   pstat = conn.prepareStatement(sql);
 		   pstat.setLong(1, level.getLevel());
 		   pstat.setDouble(2, level.getDiscount());
-		   result = pstat.execute();
+		   result = pstat.executeUpdate()>0?true:false;
 	   }
 	   levellist.put(level.getLevel(),level);
 	   pstat.close();
