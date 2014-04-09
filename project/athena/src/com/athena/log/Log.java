@@ -20,7 +20,7 @@ public final class Log {
     static {
     	try {
     		layout.setConversionPattern("%d %p - %m%n");
-			appender = new DailyRollingFileAppender(layout,"d://athena/log.txt", "'.'yyyy-MM-dd-HH-mm");
+			appender = new DailyRollingFileAppender(layout,"d://athena/log.txt", "'.'yyyy-MM-dd");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
