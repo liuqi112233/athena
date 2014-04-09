@@ -1,7 +1,5 @@
 package com.athena.account;
 
-import java.math.BigDecimal;
-
 public class AccountBean {
 	private int id;
 

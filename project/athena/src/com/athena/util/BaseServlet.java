@@ -11,6 +11,11 @@ import com.athena.log.Log;
 
 public class BaseServlet extends HttpServlet{
 
+	/**
+	 * 
+	 */
+	protected static final long serialVersionUID = 1L;
+
 	@Override
 	protected void service(HttpServletRequest arg0, HttpServletResponse arg1)
 			throws ServletException, IOException {

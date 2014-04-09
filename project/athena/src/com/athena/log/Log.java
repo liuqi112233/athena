@@ -3,11 +3,9 @@ package com.athena.log;
 import java.io.IOException;
 
 import org.apache.log4j.DailyRollingFileAppender;
-import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
-import org.apache.log4j.SimpleLayout;
 
 import com.athena.Initialization;
 

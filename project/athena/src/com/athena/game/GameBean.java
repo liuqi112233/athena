@@ -1,7 +1,5 @@
 package com.athena.game;
 
-import java.math.BigDecimal;
-
 public class GameBean {
 	private int id;
 	private String name;

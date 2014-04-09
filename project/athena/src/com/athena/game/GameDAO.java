@@ -3,10 +3,8 @@ package com.athena.game;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import net.sf.json.JSONArray;
@@ -16,10 +14,10 @@ import com.athena.database.GetConnection;
 import com.mysql.jdbc.ResultSet;
 
 public class GameDAO {
-	private static Map gamelist = new HashMap();
+	private static Map<Integer, GameBean> gamelist = new HashMap<Integer, GameBean>();
 	
 	public static GameBean getGame(int id){
-		return (GameBean) gamelist.get(id);
+		return gamelist.get(id);
 	}
 
 	public static void getAllGame() throws SQLException{
@@ -45,9 +43,10 @@ public class GameDAO {
 	
 	public static JSONArray getAllLevelJSON() {
 		JSONArray result = new JSONArray();
-		Iterator iter = gamelist.entrySet().iterator(); 
+		Iterator<?> iter = gamelist.entrySet().iterator(); 
 		while (iter.hasNext()) { 
-		    Map.Entry entry = (Map.Entry) iter.next(); 
+		    @SuppressWarnings("rawtypes")
+			Map.Entry entry = (Map.Entry) iter.next(); 
 		    GameBean level = (GameBean)entry.getValue();
 		    JSONObject jsonObject = JSONObject.fromObject(level);
 			result.add(jsonObject);

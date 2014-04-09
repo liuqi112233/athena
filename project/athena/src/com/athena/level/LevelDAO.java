@@ -3,10 +3,8 @@ package com.athena.level;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import net.sf.json.JSONArray;
@@ -19,10 +17,10 @@ public class LevelDAO {
 	private Connection conn;
 	private PreparedStatement pstat;
 	String sql="";
-	private static Map levellist = new HashMap();
+	private static Map<Integer, LevelBean> levellist = new HashMap<Integer, LevelBean>();
 	
 	public static LevelBean getDiscount(int level){
-		return (LevelBean) levellist.get(level);
+		return levellist.get(level);
 	}
 	
 	public boolean addLevel(LevelBean level) throws SQLException{
@@ -77,7 +75,7 @@ public class LevelDAO {
 		   return result;
 	}
 	
-	public Map getAllLevel() throws SQLException{
+	public Map<Integer, LevelBean> getAllLevel() throws SQLException{
 		conn = GetConnection.getConnection();
 		sql = "select * from member";
 		pstat = conn.prepareStatement(sql);
@@ -98,9 +96,10 @@ public class LevelDAO {
 	
 	public JSONArray getAllLevelJSON() {
 		JSONArray result = new JSONArray();
-		Iterator iter = levellist.entrySet().iterator(); 
+		Iterator<?> iter = levellist.entrySet().iterator(); 
 		while (iter.hasNext()) { 
-		    Map.Entry entry = (Map.Entry) iter.next(); 
+		    @SuppressWarnings("rawtypes")
+			Map.Entry entry = (Map.Entry) iter.next(); 
 		    LevelBean level = (LevelBean)entry.getValue();
 		    JSONObject jsonObject = JSONObject.fromObject(level);
 			result.add(jsonObject);

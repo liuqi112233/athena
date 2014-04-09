@@ -1,7 +1,5 @@
 package com.athena.level;
 
-import java.math.BigDecimal;
-
 public class LevelBean {
 	private int level;
 	private double discount;

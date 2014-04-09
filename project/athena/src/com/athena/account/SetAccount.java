@@ -10,10 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
-import com.athena.level.LevelBean;
-import com.athena.level.LevelDAO;
 import com.athena.util.BaseServlet;
 
 /**
