@@ -1,4 +1,4 @@
-package com.athena.account;
+package com.athena.consume;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +10,7 @@ import com.athena.database.GetConnection;
 import com.athena.log.Log;
 import com.mysql.jdbc.ResultSet;
 
-public class AccountDAO {
+public class ConsumeDAO {
 
 	public synchronized static boolean addAccount(int id) throws SQLException{
 		Connection conn = GetConnection.getConnection();

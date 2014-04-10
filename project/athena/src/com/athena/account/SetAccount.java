@@ -71,33 +71,46 @@ public class SetAccount extends BaseServlet {
 			   PrintWriter out=response.getWriter();
 		       out.println(result?"1":"0");
 		       out.close();
-		   } else if(option.equals("addBalance")){
+//		   } else if(option.equals("addBalance")){
+//			   try {
+//				   String balanceStr = request.getParameter("balance");
+//				   double count = Double.valueOf(balanceStr);
+//				   if(count <= 0)
+//					   return;
+//				   balance = AccountDAO.addBalance(userID, count);
+//				} catch (SQLException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			   JSONObject r = new JSONObject();
+//			   r.accumulate("balance", balance);
+//			   PrintWriter out=response.getWriter();
+//		       out.println(r);
+//		       out.close();
+//		   } else if(option.equals("redBalance")){
+//			   try {
+//				   String balanceStr = request.getParameter("balance");
+//				   double count = Double.valueOf(balanceStr);
+//				   if(count <= 0)
+//					   return;
+//				   balance = AccountDAO.redBalance(userID, count);
+//				} catch (SQLException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			   JSONObject r = new JSONObject();
+//			   r.accumulate("balance", balance);
+//			   PrintWriter out=response.getWriter();
+//		       out.println(r);
+//		       out.close();
+		   } else if(option.equals("getBalance")){
 			   try {
-				   String balanceStr = request.getParameter("balance");
-				   double count = Double.valueOf(balanceStr);
-				   if(count <= 0)
-					   return;
-				   balance = AccountDAO.addBalance(userID, count);
+				   balance = AccountDAO.getBalance(userID);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			   JSONObject r = new JSONObject();
-			   r.accumulate("balance", balance);
-			   PrintWriter out=response.getWriter();
-		       out.println(r);
-		       out.close();
-		   } else if(option.equals("redBalance")){
-			   try {
-				   String balanceStr = request.getParameter("balance");
-				   double count = Double.valueOf(balanceStr);
-				   if(count <= 0)
-					   return;
-				   balance = AccountDAO.redBalance(userID, count);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
 			   JSONObject r = new JSONObject();
 			   r.accumulate("balance", balance);
 			   PrintWriter out=response.getWriter();
